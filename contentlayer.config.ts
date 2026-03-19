@@ -85,9 +85,10 @@ function createSearchIndex(allBlogs) {
     siteMetadata?.search?.provider === 'kbar' &&
     siteMetadata.search.kbarConfig.searchDocumentsPath
   ) {
+    const visibleBlogs = isProduction ? allBlogs.filter((post) => post.draft !== true) : allBlogs
     writeFileSync(
       `public/${path.basename(siteMetadata.search.kbarConfig.searchDocumentsPath)}`,
-      JSON.stringify(allCoreContent(sortPosts(allBlogs)))
+      JSON.stringify(allCoreContent(sortPosts(visibleBlogs)))
     )
     console.log('Local search index generated...')
   }

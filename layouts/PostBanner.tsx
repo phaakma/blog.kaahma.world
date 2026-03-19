@@ -9,6 +9,8 @@ import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import DraftBadge from '@/components/DraftBadge'
+import { shouldShowDraftIndicator } from '@/lib/posts'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -19,6 +21,7 @@ interface LayoutProps {
 
 export default function PostMinimal({ content, next, prev, children }: LayoutProps) {
   const { slug, title, images } = content
+  const isDraft = shouldShowDraftIndicator(content)
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
 
@@ -35,7 +38,8 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                 </div>
               </Bleed>
             </div>
-            <div className="relative pt-10">
+            <div className="relative flex flex-col items-center gap-3 pt-10">
+              {isDraft && <DraftBadge />}
               <PageTitle>{title}</PageTitle>
             </div>
           </div>

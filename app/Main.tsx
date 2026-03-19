@@ -1,8 +1,10 @@
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
+import DraftBadge from '@/components/DraftBadge'
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
+import { shouldShowDraftIndicator } from '@/lib/posts'
 
 const MAX_DISPLAY = 5
 
@@ -22,6 +24,7 @@ export default function Home({ posts }) {
           {!posts.length && 'No posts found.'}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
             const { slug, date, title, summary, tags } = post
+            const isDraft = shouldShowDraftIndicator(post)
             return (
               <li key={slug} className="py-12">
                 <article>
@@ -43,7 +46,8 @@ export default function Home({ posts }) {
                               {title}
                             </Link>
                           </h2>
-                          <div className="flex flex-wrap">
+                          <div className="flex flex-wrap items-center">
+                            {isDraft && <DraftBadge compact />}
                             {tags.map((tag) => (
                               <Tag key={tag} text={tag} />
                             ))}

@@ -9,6 +9,8 @@ import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import DraftBadge from '@/components/DraftBadge'
+import { shouldShowDraftIndicator } from '@/lib/posts'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
 const discussUrl = (path) =>
@@ -31,7 +33,10 @@ interface LayoutProps {
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
   const { filePath, path, slug, date, title, tags } = content
+  const isDraft = shouldShowDraftIndicator(content)
   const basePath = path.split('/')[0]
+  const socialMetadata = siteMetadata as typeof siteMetadata & { twitter?: string; x?: string }
+  const hasTwitterAccount = Boolean(socialMetadata.twitter || socialMetadata.x)
 
   return (
     <SectionContainer>
@@ -50,7 +55,8 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   </dd>
                 </div>
               </dl>
-              <div>
+              <div className="flex flex-col items-center gap-3">
+                {isDraft && <DraftBadge />}
                 <PageTitle>{title}</PageTitle>
               </div>
             </div>
@@ -96,10 +102,14 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
               <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
-                <Link href={discussUrl(path)} rel="nofollow">
-                  Discuss on Twitter
-                </Link>
-                {` • `}
+                {hasTwitterAccount && (
+                  <>
+                    <Link href={discussUrl(path)} rel="nofollow">
+                      Discuss on X
+                    </Link>
+                    {` • `}
+                  </>
+                )}
                 <Link href={editUrl(filePath)}>View on GitHub</Link>
               </div>
               {siteMetadata.comments && (

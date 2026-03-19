@@ -1,0 +1,71 @@
+---
+title: RIP ArcGIS AppStudio
+date: '2025-02-27'
+tags: ['arcgis', 'appstudio', 'native apps']
+draft: false
+layout: PostSimple  
+summary: ArcGIS AppStudio got me back into coding and provided some awesome project experiences. Sad to see it go but there are lots of great modern options for native app development.  
+---
+
+It's been almost ten years exactly since I first heard of [ArcGIS AppStudio](https://developers.arcgis.com/appstudio/
+I was working for a small 
+company called [GPSit](https://www.gpsit.co.nz/) who at the time was searching for a replacement platform for a mobile geospatial 
+app built using the ArcGIS for Windows Mobile SDK. This app was used by [Fonterra(https://www.fonterra.com/)] field staff to [map 
+out waterways on farms](https://www.fonterra.com/nz/en/our-stories/media/fonterra-farmers-achieve-20400km-fence-waterways.html) to record their fencing status. I attended the Esri Developer Summit in 
+Palm Springs in March 2015, and quite by chance we noticed a pre-conference workshop on **Creating 
+Cross-Platform Native Apps with ArcGIS AppStudio**. I attended the workshop and immediately the 
+concept clicked as a perfect fit for us at the time.
+
+ArcGIS AppStudio provided the SDK and frameworks along with taking care of the build process, 
+allowing us to focus primarily on application logic and UI. Upon returning from that Esri Developer 
+Summit, with zero prior experience with Qt or QML or ArcGIS AppStudio, within 3 months we had a 
+working mobile application for Fonterra that worked on both iPads and Windows laptops and a very 
+happy customer. I don't know how we would have achieved that at the time without ArcGIS AppStudio.
+
+Over the following years, the mobile app (**[which became known as the 'Tiaki App' and part of the 
+wider Tiaki campaign](https://www.fonterra.com/nz/en/campaign/tiaki.html)**) was enhanced with more spatial drawing tools and custom workflows encompassing 
+riparian plantings, nitrogen reporting and Farm Environment Plan generation. I particularly enjoyed 
+writing a tool that made it super easy to digitize farm irrigation pivots by drawing a circle, 
+defining the radius dynamically or by specific measurements, and optionally to create a wedge 
+shape since many pivots are not full circles. The tool automatically clipped itself back to the 
+farm paddock to exclude waterways and other areas.
+
+No one would have known, but in the actual code that tool was called PacMan, because the drawn 
+shapes often resembled our favourite retro game character! Over the years, many PowerPoint 
+presentations by GPSit at dozens of conferences included screenshots of polygons drawn with this tool.
+
+**The Pivot tool in action (aka PacMan)**  
+![Pivot tool](/static/images/tiaki-pacman.png)  
+
+More AppStudio projects followed, with a clear highlight for me being the opportunity to build
+the [official mobile application](https://www.waikato.com/whats-on/news/2018/05/14/new-free-app-means-it-is-easier-and-quicker-to-navigate-fieldays) 
+for the [New Zealand National Fieldays(https://www.fieldays.co.nz/)] in 2018 and 2019. 
+As a massive event within NZ with large numbers of visitors in a very short period, I recall 
+we hit #2 spot in both the Apple and Google NZ app stores in 2018, only missing out on the top 
+spot due to a slightly larger event occurring at the same time - the FIFA World Cup! 
+Being a free publicly available mobile app, the Fieldays app presented new challenges 
+around user expectations and support. Feedback varied from 'this is awesome' to 
+'this is absolutely the worst app ever', but with tens of thousands of downloads and 
+only a handful of negative responses, the overall reception seemed good. My main 
+learning from this project was to allow plenty of hours for post-go-live hyper-care as 
+free public apps will always throw up unexpected issues.
+
+Since joining [Eagle Technology(https://www.eagle.co.nz/)] four years ago, I helped [Herenga ā Nuku Aotearoa](https://www.herengaanuku.govt.nz/) create an 
+AppStudio app called [Pocket Maps](https://www.herengaanuku.govt.nz/maps/pocket-maps) which has been well received and even won it's creators 
+a [Special Achievement in GIS Award which they travelled to the 2022 Esri User 
+Conference San Diego to receive](https://www.herengaanuku.govt.nz/our-work/news/news/maps-take-award-winning-kiwi-across-the-world)!
+
+These have been my highlights in my journey with ArcGIS AppStudio. The Esri AppStudio team
+ have been fantastic to deal with over the past decade, and I'm grateful to them for their 
+ help and support. AppStudio had a lot to do with shaping my career at the time. It brought 
+ together my field geospatial data collection work with my interests in IT and computing, 
+ revived my enthusiasm for coding and app making, and challenged me to do a deep dive into 
+ the world of GIS and spatial tools which led me towards my current role as a GIS Advisor.
+
+If you've worked with ArcGIS AppStudio before, feel free to comment below on what your 
+favourite projects were.
+
+ArcGIS AppStudio is now retired. If you are looking for a way to replace your ArcGIS AppStudio 
+apps, check out any of the other ArcGIS Maps SDKs, including .NET Maui or the recently out 
+of beta Flutter SDK. Or visit this [Esri blog on various options available to you](https://www.esri.com/arcgis-blog/products/appstudio/announcements/arcgis-appstudio-retirement-how-to-ensure-a-smooth-transition/).
+

@@ -8,6 +8,8 @@ import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import DraftBadge from '@/components/DraftBadge'
+import { shouldShowDraftIndicator } from '@/lib/posts'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -18,6 +20,7 @@ interface LayoutProps {
 
 export default function PostLayout({ content, next, prev, children }: LayoutProps) {
   const { path, slug, date, title } = content
+  const isDraft = shouldShowDraftIndicator(content)
 
   return (
     <SectionContainer>
@@ -34,7 +37,8 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
                   </dd>
                 </div>
               </dl>
-              <div>
+              <div className="flex flex-col items-center gap-3">
+                {isDraft && <DraftBadge />}
                 <PageTitle>{title}</PageTitle>
               </div>
             </div>

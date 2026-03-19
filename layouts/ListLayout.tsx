@@ -7,7 +7,9 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
+import DraftBadge from '@/components/DraftBadge'
 import siteMetadata from '@/data/siteMetadata'
+import { shouldShowDraftIndicator } from '@/lib/posts'
 
 interface PaginationProps {
   totalPages: number
@@ -119,6 +121,7 @@ export default function ListLayout({
           {!filteredBlogPosts.length && 'No posts found.'}
           {displayPosts.map((post) => {
             const { path, date, title, summary, tags } = post
+            const isDraft = shouldShowDraftIndicator(post)
             return (
               <li key={path} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
@@ -135,7 +138,8 @@ export default function ListLayout({
                           {title}
                         </Link>
                       </h3>
-                      <div className="flex flex-wrap">
+                      <div className="flex flex-wrap items-center">
+                        {isDraft && <DraftBadge compact />}
                         {tags?.map((tag) => <Tag key={tag} text={tag} />)}
                       </div>
                     </div>

@@ -14,7 +14,7 @@ const siteMetadata = {
   email: 'phaakma@gmail.com',
   github: 'https://github.com/phaakma',
   //x: 'https://twitter.com/x',
-  // twitter: 'https://twitter.com/Twitter',
+  //twitter: 'https://twitter.com/Twitter',
   //facebook: 'https://facebook.com',
   //youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com/in/paulhaakma',
@@ -52,7 +52,7 @@ const siteMetadata = {
   newsletter: {
     // supports mailchimp, buttondown, convertkit, klaviyo, revue, emailoctopus, beehive
     // Please add your .env file and modify it according to your selection
-    provider: 'buttondown',
+    // provider: 'buttondown',
   },
   comments: {
     // If you want to use an analytics provider you have to add it to the

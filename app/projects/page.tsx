@@ -13,7 +13,8 @@ export default function Projects() {
             Projects
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            Showcase your projects with a hero image (16 x 9)
+            In my spare time I like to work on various side projects. Most are GIS related and
+            usually you can find the code openly available on my GitHub site.
           </p>
         </div>
         <div className="container py-12">
