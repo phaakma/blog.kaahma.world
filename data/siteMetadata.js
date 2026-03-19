@@ -3,11 +3,11 @@ const siteMetadata = {
   title: 'Kaahma World Blog',
   author: 'Paul Haakma',
   headerTitle: 'Kaahma World Blog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  description: 'A personal blog from the world of kaahma.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://blog.kaahma.world',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteRepo: 'https://github.com/phaakma/blog.kaahma.world',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
   //mastodon: 'https://mastodon.social/@mastodonuser',
