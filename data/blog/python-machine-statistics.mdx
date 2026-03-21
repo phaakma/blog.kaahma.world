@@ -1,0 +1,94 @@
+---
+title: Logging Machine Statistics in Python
+date: '2025-10-18'
+lastmod: '2026-03-21'
+tags: ['python']
+draft: false
+layout: PostSimple  
+summary: Here's a familiar scenario. You are a GIS Analyst at a small to medium organisation. You have a handful of Python scripts that you run as scheduled tasks on a one of the ArcGIS Server machines. You schedule them for the middle of the night so as to have the least impact on daily BAU activities as possible. But do you know how much impact your scripts are actually having on the server resources? Perhaps it's way more or less than you imagine??  
+---
+
+Here's a familiar scenario. You are a GIS Analyst at a small to medium organisation. You have a handful of Python scripts that you run as scheduled tasks on a one of the ArcGIS Server machines. You schedule them for the middle of the night so as to have the least impact on daily BAU activities as possible. But do you know how much impact your scripts are actually having on the server resources? Perhaps it's way **more** or **less** than you imagine??
+
+Of course, you could be anyone running Python scripts in an number of situations, but it is a familiar scenario I hear from GIS Analysts in my line of work. Your IT team probably has some machine statistics logging of their own, such as from their virtualisation software. Or perhaps you have ArcGIS Monitor running, or some other monitoring agent. If you feel like you're covered by this then great, stop reading.
+
+But maybe you don't have easy access to that information. Or it's hard to pair up the exact time a particular script (or part of your script) ran with the coarse graphs that are given you. By the time you see the graph, it might be part of a chart averaged over time and it might be hard to pinpoint exactly when your script ran within that, especially if the server might be doing other tasks around that time too. Or you just want to run the script repeatively as you iterate your development and capture statistics as you go without relying on screenshots of Task Manager! 
+
+
+Here's a CPU usage chart, but when exactly did my script run during this time?  
+![CPU usage chart](/static/images/machine-statistics-chart.png)  
+
+psutil (process and system utilities) is a cross-platform library for retrieving information on running processes and system utilization (CPU, memory, disks, network, sensors) in Python.
+
+[https://github.com/giampaolo/psutil](https://github.com/giampaolo/psutil)
+
+The psutil github page has great examples of how to use psutil to grab system information which you can then log out. So you could easily just sprinkle a few extra lines of logging code throughout your scripts and call it a day. Maybe log out the CPU and RAM at the start, middle and end of your script. However, if you want to kick things up a notch, consider utilising a custom Python context manager and some threading!
+
+I envisaged being able to started a background process that would log out the system statistics periodically while a script was running. No need to clutter up the script with numerous logging calls. The statistics should log on a regular interval, e.g. every 10 seconds. The answer for this is to use the threading module to spin up a worker thread and set it on a repeating loop. This worker thread can add a log record on start, then every interval, then log out a summary of average, min and max once the logging is stopped. In my code I implemented just CPU and RAM.
+
+I didn't want these statistics cluttering up any log files from my main script. So I used the standard Python logging module but set the propagate attribute to False so that the logs from this didn't bubble up to the main logger. It also has it's own logging handler implemented to save the logs to a specific file of it's own.
+
+Lastly, the context manager makes it super simple to implement within a script. By importing just the custom context manager function, I can use the Python "with" keyword to wrap any code block within my script. This automatically starts and stops logging the system statistics with that code block.
+
+So what does the code look like within a script? Using time.sleep to simulate doing something, it is as simple as this:
+
+```python
+from machine_logger.stats_logger import log_machine_statistics
+import time
+
+with log_machine_statistics(name="Oscar the Grouch", interval=5):
+    time.sleep(15)
+    print("Logged statistics for Oscar the Grouch for 15 seconds.")
+
+with log_machine_statistics(name="Cookie Monster", interval=10):
+    time.sleep(30)
+    print("Logged statistics for Cookie Monster for 30 seconds.")
+```
+
+The actual machine logging module looks a bit like this, allowing you to specify a name to help identify specific code blocks in the log file, a path for the log file and the interval in seconds to log.
+
+```python
+imports......
+
+@contextmanager
+def log_machine_statistics(
+    *,
+    name: str = None,
+    log_file: str = "logs/machine_stats.log",
+    interval: int = 60,
+    max_bytes: int = 5_000_000,
+    backup_count: int = 3,
+):
+    logger = MachineStatsLogger(name, log_file, interval, max_bytes, backup_count)
+    try:
+        logger.start()
+        yield logger
+    finally:
+        logger.stop()
+
+
+class MachineStatsLogger:
+    """
+    A lightweight background system stats logger that:
+      • Logs CPU and memory usage to its own rotating log file
+      • Maintains running min/max/avg stats in memory
+      • Can log summary stats on demand
+    """
+
+    def __init__(
+        self,
+        name: str = None,
+        log_file: str = "logs/machine_stats.log",
+        interval: int = 60,
+        max_bytes: int = 5_000_000,
+        backup_count: int = 3,
+    ):
+        self._name = name or f"MachineStatsLogger-{id(self)}"
+
+etc.....
+```  
+
+The log output looks like this, with the usual datetime, the provided name and the statistics.
+![Statistics output](/static/images/machine-statistics-output.png)  
+
+If you think this would be helpful, either hit up your favourite AI coding assistant who I suspect would whip this up in a few minutes (yes I used AI to help put mine together!), or message me on LinkedIn and I'm happy to share my full code.  
