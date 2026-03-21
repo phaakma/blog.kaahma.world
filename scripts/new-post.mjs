@@ -104,6 +104,7 @@ async function main() {
       '---',
       `title: ${yamlQuote(title)}`,
       `date: ${yamlQuote(now)}`,
+      `lastmod: ${yamlQuote(now)}`,
       `tags: ${formatTags(tags)}`,
       'draft: true',
       `summary: ${yamlQuote(summary)}`,
