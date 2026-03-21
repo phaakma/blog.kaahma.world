@@ -1,0 +1,34 @@
+---
+title: 'Identify users of old Survey123 survey versions'
+date: '2025-08-01'
+lastmod: '2026-03-22'
+tags: ['survey123', 'arcgis']
+draft: false
+summary: 'Do you have a lot of Survey123 mobile workers, and suspect that some of them haven''t updated their survey forms? If you are using Survey123 Connect to author your surveys, here''s a useful tip for capturing the version of the form they are using.'
+layout: PostSimple
+---  
+
+![Excel spreadsheet](/static/images/survey123-identify-old-versions.jpg)  
+
+Do you have a lot of Survey123 for ArcGIS mobile workers, and suspect that some of them haven't updated their survey forms? If you are using Survey123 Connect to author your surveys, here's a useful tip for capturing the version of the form they are using.  
+
+Survey123 Connect has an option **Require update to the latest version of this survey** but in some circumstances this doesn't happen. I've seen mobile workers live in the Inbox of a particular survey and never leave it, so the check for a new survey form never happens. If you suspect this might be happening, here's a way to capture when the form they are using was last updated.  
+
+- Go to the Settings worksheet of the Excel spreadsheet and find the **version column**. Enter in the Excel formula `=NOW()`. 
+- Back in your survey worksheet, add a field to your survey called `FormRevisionDate`.  
+- Set it to type `calculate` and set the calculation to `version()`.  
+- Set readonly to `yes`.  
+- Set appearance to `hidden`.  
+- Set the `bind::esri:fieldType` to `esriFieldTypeDate`.   
+- Save and publish.  
+
+The **version()** function pulls through the value from that version column on the settings page. By setting the value of that version column to an Excel formula, from now on, whenever you save the Excel spreadsheet, the value of `=NOW()` will resolve and this value will be hardcoded into the **FormRevisionDate** field.  
+
+Whenever a mobile user creates or edits a survey record, the value from the form version that is on the user's device will update the **FormRevisionDate** field value. This allows you to look for users who have submitted surveys using forms that are older than you expect.  
+
+One caveat is that it only updates on changes to the Excel form, not changes to settings in Survey123 Connect itself.  
+
+
+And there you have it! Review the records as they come in. I recommend using _Editor Tracking_ so you can see when the records were submitted or edited. Since you know what the expected **FormRevisionDate** should be, you can filter or sort the records by **FormRevisionDate** to spot records from users that are using old versions. If you end up doing this a lot, then I'm sure you could whip up a short SQL expression or Python snippet to automate this.   
+
+If you know of a better solution, please share!  
