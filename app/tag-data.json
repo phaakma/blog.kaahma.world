@@ -1,14 +1,9 @@
 {
+  "python": 1,
   "arcgis": 1,
   "appstudio": 1,
   "native-apps": 1,
-  "next-js": 4,
-  "tailwind": 1,
-  "guide": 3,
   "multi-author": 1,
-  "feature": 1,
-  "hello": 1,
-  "math": 1,
-  "ols": 1,
-  "github": 1
+  "next-js": 1,
+  "feature": 1
 }
