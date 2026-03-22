@@ -4,15 +4,17 @@ date: '2025-08-01'
 lastmod: '2026-03-22'
 tags: ['arcgis', 'python']
 draft: false
-summary: 'Visualise ArcGIS dependencies in D3 from the output of the create_dependency_graph in the ArcGIS API for Python.'
+summary: 'Ever wondered what your ArcGIS Experience Builder app actually depends on? Or better yet — wanted to visualize those relationships in a dynamic, interactive network graph?'
 layout: PostSimple
 ---
 
 ![Visualisation in D3](/static/images/arcgis-item-dependency-visualisation-d3.png)
 
-Recently, I wrote a post about using the new [create_dependency_graph](https://developers.arcgis.com/python/latest/samples/org-wide-dependency-graph/) method in the [ArcGIS API](https://developers.arcgis.com/python/latest/) for Python to create and visualise the graph in a Jupyter notebook. I decided to take that just a little further...  
+Ever wondered what your ArcGIS Experience Builder app actually depends on? Or better yet — wanted to visualize those relationships in a dynamic, interactive network graph?  
 
-I wanted to be able to tidy up the layout and export an SVG of a graph. It made sense to be able to lock and unlock the position of nodes, and also save the layout state so I could come back to it later. I struggled to achieve this using PyViz, and I also didn't like being restricted to the small notebook window.  
+With a recent update to the [ArcGIS API for Python](https://developers.arcgis.com/python/latest/), you now can! The new [create_dependency_graph](https://developers.arcgis.com/python/latest/samples/org-wide-dependency-graph/) method returns an ItemGraph — a network of items and their dependencies. While the built-in matplotlib option gives you a basic static view, I wanted something more engaging...  
+
+I wanted to be able to tidy up the layout and export an SVG of a graph. It made sense to be able to lock and unlock the position of nodes, and also save the layout state so I could come back to it later. I initially tried using PyViz within a Jupyter Notebook but struggled to get the functionality going and I also didn't like being restricted to the small notebook window.  
 
 So I changed my approach:  
 - Still used the notebook but only to generate the graph and output it as a json file.  
