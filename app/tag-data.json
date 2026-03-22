@@ -1,9 +1,7 @@
 {
-  "python": 1,
-  "arcgis": 1,
+  "python": 2,
+  "arcgis": 3,
+  "survey123": 1,
   "appstudio": 1,
-  "native-apps": 1,
-  "multi-author": 1,
-  "next-js": 1,
-  "feature": 1
+  "native-apps": 1
 }

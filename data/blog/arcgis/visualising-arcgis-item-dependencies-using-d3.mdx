@@ -1,0 +1,32 @@
+---
+title: 'Visualising ArcGIS item dependencies using D3'
+date: '2025-08-01'
+lastmod: '2026-03-22'
+tags: ['arcgis', 'python']
+draft: false
+summary: 'Visualise ArcGIS dependencies in D3 from the output of the create_dependency_graph in the ArcGIS API for Python.'
+layout: PostSimple
+---
+
+![Visualisation in D3](/static/images/arcgis-item-dependency-visualisation-d3.png)
+
+Recently, I wrote a post about using the new [create_dependency_graph](https://developers.arcgis.com/python/latest/samples/org-wide-dependency-graph/) method in the [ArcGIS API](https://developers.arcgis.com/python/latest/) for Python to create and visualise the graph in a Jupyter notebook. I decided to take that just a little further...  
+
+I wanted to be able to tidy up the layout and export an SVG of a graph. It made sense to be able to lock and unlock the position of nodes, and also save the layout state so I could come back to it later. I struggled to achieve this using PyViz, and I also didn't like being restricted to the small notebook window.  
+
+So I changed my approach:  
+- Still used the notebook but only to generate the graph and output it as a json file.  
+- Created a stand alone web app that could load, edit and save the json file. This allows to open in a browser full screen if I want.  
+- Switched to using the [D3 JavaScript library](https://d3js.org/).  
+
+The python code to generate the json file and the source code for the web app are in a [github repo](https://github.com/phaakma/arcgis_item_graph) so you can try it out. The web app itself is available from [GitHub Pages](https://phaakma.github.io/arcgis_item_graph/) from that repo if you don't want to download and run it yourself.  
+
+The web app could do with more polish, labelling options, styles and not all item types have icons. I'm not sure I'll do much more dev work on this, but feel free to take it and use or even improve and contribute back.  
+
+The short video below shows me loading a graph, randomly moving a few nodes and watching them re-orientate themselves. I found that the best approach was to find the web maps, drag them around and see what follows. And adjusting the **link distance** out and back in seems to help as the physics logic kicks in and everything tries to find equilibrium again. Also, attempting to load too many items just creates massive visual clutter, so perhaps loading your entire organisation's items is not the best use case!    
+
+<YouTube id="rdWtymvFkv4" title="ArcGIS dependency graph visualisation web app" />
+
+If necessary, I recommend upgrading your ArcGIS API for Python to v2.4.1.3 using `conda update arcgis` from your cloned Python environment.
+
+Enjoy.
