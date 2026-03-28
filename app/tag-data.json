@@ -1,6 +1,10 @@
 {
+  "arcgis": 6,
+  "geodatabase": 2,
+  "attribute-rules": 1,
+  "arcgis-enterprise": 1,
+  "geoparquet": 1,
   "python": 2,
-  "arcgis": 3,
   "survey123": 1,
   "appstudio": 1,
   "native-apps": 1
