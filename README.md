@@ -4,6 +4,11 @@ This is a [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com
 
 Visit [blog.kaahma.world](https://blog.kaahma.world) to see the live blog website.  
 
+To create a new draft blog post:  
+```bash
+npm run new-post
+```
+
 Below are the relevant parts of the README from the source template repo.  
 
 ## Sample posts
