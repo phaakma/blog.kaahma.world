@@ -3,7 +3,7 @@ const siteMetadata = {
   title: 'Kaahma World Blog',
   author: 'Paul Haakma',
   headerTitle: 'Kaahma World Blog',
-  description: 'A personal blog from the world of kaahma.',
+  description: 'A personal blog from the world of Kaahma.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://blog.kaahma.world',
