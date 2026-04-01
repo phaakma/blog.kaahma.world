@@ -9,7 +9,7 @@ const siteMetadata = {
   siteUrl: 'https://blog.kaahma.world',
   siteRepo: 'https://github.com/phaakma/blog.kaahma.world',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
-  socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
+  socialBanner: `${process.env.BASE_PATH || ''}/static/images/social-card.png`,
   //mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'phaakma@gmail.com',
   github: 'https://github.com/phaakma',
