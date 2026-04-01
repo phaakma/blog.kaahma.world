@@ -27,8 +27,8 @@ export default function AuthorLayout({ children, content }: Props) {
             About
           </h1>
         </div>
-        <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
-          <div className="flex flex-col items-center space-x-2 pt-8">
+        <div className="pt-8 pb-8">
+          <div className="mx-auto flex flex-col items-center gap-6 lg:w-fit lg:flex-row lg:items-center lg:justify-center">
             {avatar && (
               <Image
                 src={avatar}
@@ -38,43 +38,45 @@ export default function AuthorLayout({ children, content }: Props) {
                 className="h-48 w-48 rounded-full"
               />
             )}
-            <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">{name}</h3>
-            <div className="text-gray-500 dark:text-gray-400">{occupation}</div>
-            <div className="text-gray-500 dark:text-gray-400">{company}</div>
-            <div className="flex space-x-3 pt-6">
-              <SocialIcon kind="mail" href={`mailto:${email}`} />
-              <SocialIcon kind="github" href={github} />
-              <SocialIcon kind="linkedin" href={linkedin} />
-              <SocialIcon kind="x" href={twitter} />
-              <SocialIcon kind="bluesky" href={bluesky} />
-            </div>
-            {credentials.length > 0 && (
-              <div className="mt-5 w-full max-w-sm px-2">
-                <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-                  {credentials.map((badge) => (
-                    <li key={badge.url}>
-                      <a
-                        href={badge.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`View credential: ${badge.name}`}
-                        className="block overflow-hidden rounded-md border border-gray-200 bg-white transition hover:-translate-y-0.5 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800"
-                      >
-                        <NextImage
-                          src={badge.image}
-                          alt={badge.name}
-                          width={96}
-                          height={96}
-                          className="h-auto w-full"
-                        />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+            <div className="flex flex-col items-center lg:items-start">
+              <h3 className="pb-2 text-2xl leading-8 font-bold tracking-tight">{name}</h3>
+              <div className="text-gray-500 dark:text-gray-400">{occupation}</div>
+              <div className="text-gray-500 dark:text-gray-400">{company}</div>
+              <div className="flex space-x-3 pt-5">
+                <SocialIcon kind="mail" href={`mailto:${email}`} />
+                <SocialIcon kind="github" href={github} />
+                <SocialIcon kind="linkedin" href={linkedin} />
+                <SocialIcon kind="x" href={twitter} />
+                <SocialIcon kind="bluesky" href={bluesky} />
               </div>
-            )}
+            </div>
           </div>
-          <div className="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2">
+          {credentials.length > 0 && (
+            <div className="mt-8">
+              <ul className="flex flex-wrap justify-center gap-2 sm:gap-3">
+                {credentials.map((badge) => (
+                  <li key={badge.url} className="w-18 sm:w-20 lg:w-26">
+                    <a
+                      href={badge.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View credential: ${badge.name}`}
+                      className="block overflow-hidden rounded-md border border-gray-200 bg-white transition hover:-translate-y-0.5 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800"
+                    >
+                      <NextImage
+                        src={badge.image}
+                        alt={badge.name}
+                        width={128}
+                        height={128}
+                        className="h-auto w-full"
+                      />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div className="prose dark:prose-invert max-w-none pt-8">
             {children}
           </div>
         </div>
