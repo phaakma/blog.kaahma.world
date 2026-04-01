@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import NextImage from 'next/image'
 import type { Authors } from 'contentlayer/generated'
 import SocialIcon from '@/components/social-icons'
 import Image from '@/components/Image'
@@ -8,8 +9,15 @@ interface Props {
   content: Omit<Authors, '_id' | '_raw' | 'body'>
 }
 
+type CredentialBadge = {
+  name: string
+  url: string
+  image: string
+}
+
 export default function AuthorLayout({ children, content }: Props) {
   const { name, avatar, occupation, company, email, twitter, bluesky, linkedin, github } = content
+  const credentials = (content.credentials as CredentialBadge[] | undefined) ?? []
 
   return (
     <>
@@ -40,6 +48,31 @@ export default function AuthorLayout({ children, content }: Props) {
               <SocialIcon kind="x" href={twitter} />
               <SocialIcon kind="bluesky" href={bluesky} />
             </div>
+            {credentials.length > 0 && (
+              <div className="mt-5 w-full max-w-sm px-2">
+                <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                  {credentials.map((badge) => (
+                    <li key={badge.url}>
+                      <a
+                        href={badge.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`View credential: ${badge.name}`}
+                        className="block overflow-hidden rounded-md border border-gray-200 bg-white transition hover:-translate-y-0.5 hover:shadow-sm dark:border-gray-700 dark:bg-gray-800"
+                      >
+                        <NextImage
+                          src={badge.image}
+                          alt={badge.name}
+                          width={96}
+                          height={96}
+                          className="h-auto w-full"
+                        />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
           <div className="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2">
             {children}
