@@ -1,7 +1,7 @@
 import 'css/prism.css'
 import 'katex/dist/katex.css'
 
-import PageTitle from '@/components/PageTitle'
+import type { ComponentType, ReactNode } from 'react'
 import { components } from '@/components/MDXComponents'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
 import { sortPosts, coreContent, allCoreContent } from 'pliny/utils/contentlayer'
@@ -16,10 +16,34 @@ import { notFound } from 'next/navigation'
 import { filterVisiblePosts } from '@/lib/posts'
 
 const defaultLayout = 'PostLayout'
-const layouts = {
+
+type AdjacentPost = {
+  path: string
+  title: string
+}
+
+type BlogLayoutProps = {
+  content: ReturnType<typeof coreContent<Blog>>
+  authorDetails?: ReturnType<typeof coreContent<Authors>>[]
+  next?: AdjacentPost
+  prev?: AdjacentPost
+  children: ReactNode
+}
+
+const layouts: Record<string, ComponentType<BlogLayoutProps>> = {
   PostSimple,
   PostLayout,
   PostBanner,
+}
+
+function resolveLayout(layoutName?: string) {
+  const normalizedLayoutName = layoutName?.trim()
+
+  if (normalizedLayoutName && normalizedLayoutName in layouts) {
+    return layouts[normalizedLayoutName as keyof typeof layouts]
+  }
+
+  return layouts[defaultLayout]
 }
 
 export async function generateMetadata(props: {
@@ -107,7 +131,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
     }
   })
 
-  const Layout = layouts[post.layout || defaultLayout]
+  const Layout = resolveLayout(post.layout)
 
   return (
     <>
