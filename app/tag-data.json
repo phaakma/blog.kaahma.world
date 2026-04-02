@@ -1,7 +1,7 @@
 {
-  "ai": 2,
   "arcgis": 6,
   "geodatabase": 2,
+  "ai": 2,
   "attribute-rules": 1,
   "arcgis-enterprise": 1,
   "geoparquet": 1,
