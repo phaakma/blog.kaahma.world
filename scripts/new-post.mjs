@@ -12,7 +12,10 @@ function yamlQuote(value) {
 }
 
 function normalizeFolder(folderInput) {
-  const cleaned = folderInput.trim().replace(/\\/g, '/').replace(/^\/+|\/+$/g, '')
+  const cleaned = folderInput
+    .trim()
+    .replace(/\\/g, '/')
+    .replace(/^\/+|\/+$/g, '')
   if (!cleaned) {
     return ''
   }
@@ -75,9 +78,7 @@ async function main() {
     const folder = normalizeFolder(folderInput)
 
     let layoutInput = (
-      await rl.question(
-        `Layout (${ALLOWED_LAYOUTS.join(', ')}) [${DEFAULT_LAYOUT}]: `
-      )
+      await rl.question(`Layout (${ALLOWED_LAYOUTS.join(', ')}) [${DEFAULT_LAYOUT}]: `)
     ).trim()
     if (!layoutInput) {
       layoutInput = DEFAULT_LAYOUT

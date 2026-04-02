@@ -150,7 +150,9 @@ export default function ListLayoutWithTags({
                           </h2>
                           <div className="flex flex-wrap items-center">
                             {isDraft && <DraftBadge compact />}
-                            {tags?.map((tag) => <Tag key={tag} text={tag} />)}
+                            {tags?.map((tag) => (
+                              <Tag key={tag} text={tag} />
+                            ))}
                           </div>
                         </div>
                         <div className="prose max-w-none text-gray-500 dark:text-gray-400">

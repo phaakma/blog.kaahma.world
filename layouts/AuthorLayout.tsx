@@ -76,9 +76,7 @@ export default function AuthorLayout({ children, content }: Props) {
               </ul>
             </div>
           )}
-          <div className="prose dark:prose-invert max-w-none pt-8">
-            {children}
-          </div>
+          <div className="prose dark:prose-invert max-w-none pt-8">{children}</div>
         </div>
       </div>
     </>
