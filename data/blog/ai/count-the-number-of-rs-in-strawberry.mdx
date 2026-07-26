@@ -1,0 +1,68 @@
+---
+title: "Count the number of r's in strawberry"
+date: '2026-07-26'
+lastmod: '2026-07-26'
+tags: ['ai', 'strawberry', 'agents']
+draft: false
+summary: Remember when we all made fun of early ChatGPT's attempts to count the number of r's in the world strawberry? Maybe we all missed the point.
+layout: PostSimple
+---
+
+## Count the number of r's in strawberry
+
+Remember when we all made fun of early ChatGPT's attempts to count the number of r's in the word `strawberry`?
+
+I chuckled too and moved on. Turns out I completely missed a really important point in all that, and maybe you did too.
+
+Ask a little kid to count the number of r's in `strawberry` and they might or might not get it correct. Ask a university student to do it and they almost certainly will get it correct. That's a bit like comparing early LLM versions to later ones, they grew up and got better.
+
+Ask a little kid to count the number of r's in a Harry Potter book and they will certainly get it wrong. Ask a university student to do it and they will almost certainly get it wrong too. But then, ask the latest LLM models to do it and they will probably also get it wrong, depending on a lot of factors like context windows, memory caching and other strategies.
+
+**Looking back now, I feel like I completely missed the key point here.** Counting the number of r's is a problem already solved. It has a completely deterministic answer and computer algorithms already do this perfectly well. So, other than the entertainment factor that comes from smugly considering ourselves still smarter than an obviously incompetent LLM, why on earth would we use a generative AI LLM model to attempt to count letters?
+
+Apart from obvious constraints like memory, the following code snippet would happily count all the r's in a text string of every Harry Potter book ever written and provide a correct answer every time.
+
+```python
+text = "your text here"
+print(text.lower().count("r"))
+```
+
+It seems so obvious, and we see AI Agents doing this routinely now. Coding agents use command line tools like `grep`, `find`, `wc`, `sort` and `diff` to name but a few. These tools have existed for much longer than modern LLM models, but rather than the AI Agents using the models to perform simple deterministic tasks like counting letters, they use existing robust tools. This provides reliable results without consuming expensive tokens and allows the model to focus on the part that it actually brings value to: reasoning over the outputs, figuring out which step to take next, orchestrating a workflow.
+
+When an LLM fails at a deterministic task, it often enters a `hallucination loop`. Asking it to try again often results in it confidently providing a different wrong answer. If it uses a tool, however, this provides a reliable binary success/failure state which either you or the agent can use.
+
+Agents can chain together a series of 'thoughts' to simulate reasoning. This doesn't actually improve their ability to do math or count. They are still just predicting the next most likely token. Tools, on the other hand, bypass the need for the model to "guess" the correct answer by providing the result directly.
+
+## Where does an agent actually provide value?
+
+Perhaps a workflow leading up to that point needs to decide which book to count the number of r's in? There might be a reasoning path that leads up to that point which an AI Agent could viably reason about. And of course, using the count returned by the tool might trigger a decision path for the agent to take. This results in a smarter approach where the agent and the LLM act as managers and orchestrators to chain together a useful set of tools to arrive at a desired final outcome.
+
+## Apply this to the world of Geospatial
+
+Let us take an example from the GIS world. Imagine you are given a CSV with three columns, `asset_id, latitude, longitude` and then, given a particular location `latitude/longitude` asked to work out which assets were within 1km of that point.
+
+If the csv only had a handful of records, you, as a human, might be tempted to look at the numbers and work out in your head which sets of lat/longs are closer than 1km. Good luck and I take my hat off at you if you can. Now translate that to the world of AI. It would be like uploading the csv file and the location point directly to a chatbot and asking it for the answer. Would it provide a correct answer? Some models would probably be better than others, but since the answer we want is quite deterministic, chances are that we probably wouldn't trust the answer given.
+
+What would we do? Grab some tools of course. Perhaps **`arcpy.management.XYTableToPoint`**, **`arcpy.analysis.Buffer`** and **`arcpy.analysis.Intersect`** would do the trick.
+
+If this was a regular process, you could wrap the whole thing in a custom tool and place it behind a button. But where an AI Agent might add value is if the person with the data and the question is not familiar with those tools or how to use them. They can provide the AI agent with the data and the question, the agent can reason about the data given and the best tools and workflow to achieve it, execute it and return an answer. The non-technical user has asked a business question and received a reliable answer.
+
+The concept sounds great. How do we implement this at organisation wide scale? Providing agents with access to local files and Python environments comes with security risks and ICT headaches to manage. Instead, **secure web based user interfaces interacting with enterprise systems via known and secure patterns is a great way to provision AI agent capabilities across an organisation**. This is where **`ArcGIS Online`** or **`ArcGIS Enterprise`** become a great option. They provide an enterprise grade Web GIS experience that exposes data and tools as REST API services which provide an ideal platform for AI agents to leverage.
+
+In our simple example prior, the AI agent could utilise a local JavaScript framework to construct valid Point and FeatureSet objects, then utilise the [geometry service API](https://developers.arcgis.com/rest/services-reference/enterprise/geometry-service/) as tools to do the buffer and intersect. For a more advanced workflow where the data needs to be persisted and visualised, the agent could upload the csv and publish it as a hosted feature layer and create a simple web app such as the [Nearby Instant App](https://doc.arcgis.com/en/instant-apps/latest/create-apps/nearby.htm).
+
+The value comes from the combination:
+
+- Non technical subject matter expert who needs a little guidance and help.
+- Enterprise grade web based corporate systems that provide access to relevant data and tools.
+- AI Agents with appropriate capabilities.
+
+## What happens here to the role of the GIS team?
+
+I see appropriate use of AI agents as helping geospatial teams in two ways.
+
+First, the AI and the enterprise platforms it interacts with will need ongoing maintenance and care. As much as we might like to envisage a nirvana where these platforms run themselves and exist in a fantastic state indefinitely, the reality is far from it. At least for the very forseeable future, these roles to administer, feed and water the platforms and infrastructure will exist, if not expand. We know that better systems usually result in more usage and increased value, which requires more maintenance and investment to continue seeing a good return on investment.
+
+Secondly, I would view this as a force multipler for geospatial teams. Most are over-worked and under-resourced. Deploying AI agents to handle these sorts of BAU enquries can free up GIS Analyst's time to focus on more valuable activities. For some, it will be the former point about maintaining the platform. For others, it will be more abstract and high value. Spend less time converting csvs to points and exporting PDF's. Spend more time conversing with stakeholders about what the dots on the map actually mean and how can we use this cool geospatial technology to influence and improve our lives, environment and circumstances?
+
+**Ultimately, the goal isn't to replace human expertise with artificial intelligence, but to use it as a force multiplier that clears away the technical hurdles, allowing us to focus on what truly matters: turning data into meaningful action.**
