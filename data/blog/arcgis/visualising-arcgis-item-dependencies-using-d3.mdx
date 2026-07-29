@@ -8,24 +8,33 @@ summary: 'Ever wondered what your ArcGIS Experience Builder app actually depends
 layout: PostSimple
 ---
 
-![Visualisation in D3](/static/images/arcgis-item-dependency-visualisation-d3.png)
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '2rem 0',
+  }}
+>
+  ![Visualising items in D3](/static/images/arcgis-item-dependency-visualisation-d3.png)
+</div>
 
-Ever wondered what your ArcGIS Experience Builder app actually depends on? Or better yet — wanted to visualize those relationships in a dynamic, interactive network graph?  
+Ever wondered what your ArcGIS Experience Builder app actually depends on? Or better yet — wanted to visualize those relationships in a dynamic, interactive network graph?
 
-With a recent update to the [ArcGIS API for Python](https://developers.arcgis.com/python/latest/), you now can! The new [create_dependency_graph](https://developers.arcgis.com/python/latest/samples/org-wide-dependency-graph/) method returns an ItemGraph — a network of items and their dependencies. While the built-in matplotlib option gives you a basic static view, I wanted something more engaging...  
+With a recent update to the [ArcGIS API for Python](https://developers.arcgis.com/python/latest/), you now can! The new [create_dependency_graph](https://developers.arcgis.com/python/latest/samples/org-wide-dependency-graph/) method returns an ItemGraph — a network of items and their dependencies. While the built-in matplotlib option gives you a basic static view, I wanted something more engaging...
 
-I wanted to be able to tidy up the layout and export an SVG of a graph. It made sense to be able to lock and unlock the position of nodes, and also save the layout state so I could come back to it later. I initially tried using PyViz within a Jupyter Notebook but struggled to get the functionality going and I also didn't like being restricted to the small notebook window.  
+I wanted to be able to tidy up the layout and export an SVG of a graph. It made sense to be able to lock and unlock the position of nodes, and also save the layout state so I could come back to it later. I initially tried using PyViz within a Jupyter Notebook but struggled to get the functionality going and I also didn't like being restricted to the small notebook window.
 
-So I changed my approach:  
-- Still used the notebook but only to generate the graph and output it as a json file.  
-- Created a stand alone web app that could load, edit and save the json file. This allows to open in a browser full screen if I want.  
-- Switched to using the [D3 JavaScript library](https://d3js.org/).  
+So I changed my approach:
 
-The python code to generate the json file and the source code for the web app are in a [github repo](https://github.com/phaakma/arcgis_item_graph) so you can try it out. The web app itself is available from [GitHub Pages](https://phaakma.github.io/arcgis_item_graph/) from that repo if you don't want to download and run it yourself.  
+- Still used the notebook but only to generate the graph and output it as a json file.
+- Created a stand alone web app that could load, edit and save the json file. This allows to open in a browser full screen if I want.
+- Switched to using the [D3 JavaScript library](https://d3js.org/).
 
-The web app could do with more polish, labelling options, styles and not all item types have icons. I'm not sure I'll do much more dev work on this, but feel free to take it and use or even improve and contribute back.  
+The python code to generate the json file and the source code for the web app are in a [github repo](https://github.com/phaakma/arcgis_item_graph) so you can try it out. The web app itself is available from [GitHub Pages](https://phaakma.github.io/arcgis_item_graph/) from that repo if you don't want to download and run it yourself.
 
-The short video below shows me loading a graph, randomly moving a few nodes and watching them re-orientate themselves. I found that the best approach was to find the web maps, drag them around and see what follows. And adjusting the **link distance** out and back in seems to help as the physics logic kicks in and everything tries to find equilibrium again. Also, attempting to load too many items just creates massive visual clutter, so perhaps loading your entire organisation's items is not the best use case!    
+The web app could do with more polish, labelling options, styles and not all item types have icons. I'm not sure I'll do much more dev work on this, but feel free to take it and use or even improve and contribute back.
+
+The short video below shows me loading a graph, randomly moving a few nodes and watching them re-orientate themselves. I found that the best approach was to find the web maps, drag them around and see what follows. And adjusting the **link distance** out and back in seems to help as the physics logic kicks in and everything tries to find equilibrium again. Also, attempting to load too many items just creates massive visual clutter, so perhaps loading your entire organisation's items is not the best use case!
 
 <YouTube id="rdWtymvFkv4" title="ArcGIS dependency graph visualisation web app" />
 
